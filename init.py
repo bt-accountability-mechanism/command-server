@@ -52,7 +52,7 @@ def log_sensors():
 
 
 # save sensor data every 35ms
-set_interval(log_sensors, 0.035)
+#set_interval(log_sensors, 0.035)
 
 def log_request(message):
     logger.info('Receive REQ CMD "' + message + '" from CLIENT');
@@ -87,52 +87,53 @@ while True:
         
         output = 'n/a'
         request_action = None  # set action modes
+	print "The action is " + action
         if (action == 'LEFT'):
             request_action = 'Robot goes left'
-        log_request(request_action)
-        output = robot.left(finished)
+            log_request(request_action)
+            output = robot.left(finished)
         if (action == 'RIGHT'):
             request_action = 'Robot goes right'
-        log_request(request_action)
-        output = robot.right(finished)
+            log_request(request_action)
+            output = robot.right(finished)
         if (action == 'GO' or action == 'STRAIGHT_FORWARD'):
             request_action = 'Robot goes straight forward'
-        log_request(request_action)
-        output = robot.straightForward(finished)
+            log_request(request_action)
+            output = robot.straightForward(finished)
         if (action == 'TURN' or action == 'BACK'):
             request_action = 'Robot turns'
-        log_request(request_action)
-        output = robot.turn(finished)
+            log_request(request_action)
+            output = robot.turn(finished)
         
         # set internal modes
         if (action == 'BEEP' or action == 'TOOT'):
             request_action = 'Robot toots'
-        log_request(request_action)
-        output = robot.beep()
+            log_request(request_action)
+            output = robot.beep()
         if (action == 'PASSIVE_MODE'):
             request_action = 'Robot changes to passive mode'
-        log_request(request_action)
-        output = robot.passive_mode()
+            log_request(request_action)
+            output = robot.passive_mode()
         if (action == 'SAFE_MODE'):
             request_action = 'Robot changes to save mode'
-        log_request(request_action)
-        output = robot.safe_mode()
+            log_request(request_action)
+            output = robot.safe_mode()
         if (action == 'DOCKING_MODE'):
             request_action = 'Robot changes to docking mode'
-        log_request(request_action)
-        output = robot.dock_mode()
+            log_request(request_action)
+            output = robot.dock_mode()
         if (action == 'CLEANING_MODE'):
             request_action = 'Robot changes to cleaning mode'
-        log_request(request_action)
-        output = robot.clean_mode()
+            log_request(request_action)
+            output = robot.clean_mode()
         if (action == 'FULL_MODE'):
             request_action = 'Robot changing to full control mode'
-        log_request(request_action)
-        output = robot.full_mode()
+            log_request(request_action)
+            output = robot.full_mode()
         if (action == 'RESET'):
             request_action = 'Robot resets'
-        log_request(request_action)
-        output = robot.reset()
+            log_request(request_action)
+            output = robot.reset()
         
         if (request_action is not None):
             logger.info('Receive RESP "' + str(output) + '" for REQ "' + request_action + '" from ROBOT')

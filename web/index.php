@@ -1,4 +1,7 @@
 <?php
+
+header("Access-Control-Allow-Origin: *");
+
 $refs = array(
     'left' => 'LEFT',
     'right' => 'RIGHT',
@@ -20,7 +23,7 @@ if (isset($_GET['action']) && isset($refs[$_GET['action']])) {
 	$action = null;
 }
 
-$path = '/home/ubuntu/irobot/';
+$path = '/home/ubuntu/command-server/';
 $file = 'middleware.py';
 if ($action === 'LOG') {
 	chdir($path);
