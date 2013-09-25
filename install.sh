@@ -13,10 +13,6 @@ python setup.py install
 cd ../
 rm -R pyserial
 
-# clone project
-git clone https://gitlab.christoph-caprano.de/bachelorarbeit/command-server.git
-cd command-server
-
 # webserver installation
 apt-get install -y apache2 php5 libapache2-mod-php5
 service apache2 restart
