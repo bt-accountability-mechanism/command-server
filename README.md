@@ -6,13 +6,75 @@
 
 ## Installation (Apache2, PHP5, Python, Python serial module)
 
-``bash
+```bash
 # clone this repo
 git clone https://github.com/bt-accountability-mechanism/command-server
 cd command-server
 # start installation
 sudo ./install
-``
+```
+
+### Install Python proxy and Python script sending commands to the robot
+
+This program helps you to control your iRobot within a web interface or other script you would like to run. 
+
+#### 1. Make the middleware.py available for other users (required if you call this script from users with minimal rights, e.g. www-data)
+
+The middleware.py should be called from your webserver script (or any other script which receives and prepares the commands). The format for calling this script will be explained in the [usage guide](#usage). 
+
+This command shows how to change the group for a web server user www-data
+```
+chown :www-data middleware.py
+```
+
+Next you have to make this file executable
+```
+chmod g+x middleware.py
+```
+
+### 3. Make boot.sh executable (if not still done)
+```
+chmod u+x init.py
+```
+
+Next, the initialization program can be started which runs also the middleware for accepting proxy requests (e.g. from your webserver). 
+
+```
+./init.py
+```
+
+### <a name="usage"></a>Usage guide
+
+### 1. Start the program
+```
+./init.py
+```
+### 2. Call the middleware
+This example shows how to call the middleware from a web server script: 
+
+```php
+<?php
+// this command resets your robot
+$action = 'RESET';
+$path = '/YOUR/PATH';
+$file = 'middleware.py';
+chdir($path);
+// middleware is called with ./middleware.py ACTION:STRING IS_FINISHED:BOOL
+shell_exec('./'.$file.' '.$action.' false');
+?>
+```
+
+This content was still copied to your public webserver root folder (/var/www/html)
+
+
+### 3. Hurray! Robot should reset
+
+
+## Simulation without robot
+Set the environment variable export TEST_IROBOT to 1: 
+```
+export TEST_IROBOT=1
+```
 
 ## Getting started
 
@@ -42,11 +104,11 @@ End moving left:
 http://localhost/index.php?action=left&finished=true
 
 For saving logs, please make a POST request with the following parameters: 
-``json
+```
 {
 message: string
 }
-``
+```
 
 Example: `curl -X POST http://localhost/index.php -d "message: \"incredible important log message\""`
 
@@ -59,86 +121,86 @@ Example: `curl -X POST http://localhost/index.php -d "message: \"incredible impo
 
 This program helps you to control your iRobot within a web interface or other script you would like to run. 
 
-- 1. Make the middleware.py available for other users (required if you call this script from users with minimal rights, e.g. www-data)
+- Make the middleware.py available for other users (required if you call this script from users with minimal rights, e.g. www-data)
 
     The middleware.py should be called from your webserver script (or any other script which receives and prepares the commands). The format for calling this script will be explained in the [usage guide](#usage). 
     
     This command shows how to change the group for a web server user www-data
-    ``
+    ```
     chown :www-data middleware.py
-    ``
+    ```
 
     Next you have to make this file executable
-    ``
+    ```
     chmod g+x middleware.py
-    ``
+    ```
 
-- 2. Make boot.sh executable (if not still done)
-    ``
+- Make boot.sh executable (if not still done)
+    ```
     chmod u+x init.py
-    ``
+    ```
 
     Next, the initialization program can be started which runs also the middleware for accepting proxy requests (e.g. from your webserver). 
 
-    ``
+    ```
     ./init.py
-    ``
+    ```
 
 #### <a name="usage"></a>Usage guide
 
-- 1. Start the program
-``
-./init.py
-``
-- 2. Call the middleware
-This example shows how to call the middleware from a web server script: 
+- Start the program
+    ```
+    ./init.py
+    ```
+- Call the middleware
+    This example shows how to call the middleware from a web server script: 
 
-``php
-<?php
-// this command resets your robot
-$action = 'RESET';
-$path = '/YOUR/PATH';
-$file = 'middleware.py';
-chdir($path);
-// middleware is called with ./middleware.py ACTION:STRING IS_FINISHED:BOOL
-shell_exec('./'.$file.' '.$action.' false');
-?>
-``
+    ```php
+    <?php
+    // this command resets your robot
+    $action = 'RESET';
+    $path = '/YOUR/PATH';
+    $file = 'middleware.py';
+    chdir($path);
+    // middleware is called with ./middleware.py ACTION:STRING IS_FINISHED:BOOL
+    shell_exec('./'.$file.' '.$action.' false');
+    ?>
+    ```
 
-This content was still copied to your public webserver root folder (/var/www/html)
+    This content was still copied to your public webserver root folder (/var/www/html)
 
 
-- 3. Hurray! Robot should reset
+- Hurray! Robot should reset
 
 
 #### Simulation without robot
 Set the environment variable export TEST_IROBOT to 1: 
-``
+```
 export TEST_IROBOT=1
-``
+```
 
 ### Install a web server on your server with PHP support
 
 #### Option1: apache2
 
 ##### Install apache2
-``
+```bash
 $ sudo apt-get update
 $ sudo apt-get install apache2
-``
+```
 
 #### Install PHP
 This example shows how to install PHP-5, but you can use any other version >= 5. 
 
 Install PHP: 
-``bash
+```bash
 $ sudo apt-get install php5 libapache2-mod-php5
-``
+```
 
 Restart Apache2
-``
+```bash
 sudo service apache2 restart
-``
+```
 
 Ref: https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu
 
@@ -146,10 +208,10 @@ Ref: https://www.digitalocean.com/community/tutorials/how-to-install-linux-apach
 
 ##### Install nginx
 
-``bash
+```bash
 $ sudo apt-get update
 $ sudo apt-get install nginx
-``
+```
 
 ###### Install PHP
 
@@ -157,14 +219,14 @@ First install PHP-FPM
 
 ```bash
 $ sudo apt-get install php5-fpm
-``
+```
 
 Next, activate it in your nginx server
 `sudo nano /etc/nginx/sites-available/default`
 
 Replace the content with the following: 
 
-``
+```
 server {
   listen 80 default_server;
   listen [::]:80 default_server ipv6only=on;
@@ -193,23 +255,23 @@ server {
     include fastcgi_params;
   }
 }
-``
+```
 
 Restart nginx
-``bash
+```bash
 sudo service nginx restart
-``
+```
 
 ### Clone PHP file in public webserver folder
 
 Next, the file which should handle the incomming command requests have to be copied to the public webserver.
 
 If you use apache2, /var/www/html should be normally your public folder: 
-``
+```
 cp web/index.php /var/www/html/index.php
-``
+```
 
 If you use nginx, /var/www/html should be normally your public folder:
-``
+```
 cd web/index.php /usr/share/nginx/html/index.php
-``
+```
