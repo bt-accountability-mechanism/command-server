@@ -4,78 +4,6 @@
 
  - Ubuntu 14.04 OS or Ubuntu 16.x OS or Raspberry OS
 
-## Installation (Apache2, PHP5, Python, Python serial module)
-
-```bash
-# clone this repo
-git clone https://github.com/bt-accountability-mechanism/command-server
-cd command-server
-# start installation
-sudo ./install
-```
-
-### Install Python proxy and Python script sending commands to the robot
-
-This program helps you to control your iRobot within a web interface or other script you would like to run. 
-
-#### 1. Make the middleware.py available for other users (required if you call this script from users with minimal rights, e.g. www-data)
-
-The middleware.py should be called from your webserver script (or any other script which receives and prepares the commands). The format for calling this script will be explained in the [usage guide](#usage). 
-
-This command shows how to change the group for a web server user www-data
-```
-chown :www-data middleware.py
-```
-
-Next you have to make this file executable
-```
-chmod g+x middleware.py
-```
-
-### 3. Make boot.sh executable (if not still done)
-```
-chmod u+x init.py
-```
-
-Next, the initialization program can be started which runs also the middleware for accepting proxy requests (e.g. from your webserver). 
-
-```
-./init.py
-```
-
-### <a name="usage"></a>Usage guide
-
-### 1. Start the program
-```
-./init.py
-```
-### 2. Call the middleware
-This example shows how to call the middleware from a web server script: 
-
-```php
-<?php
-// this command resets your robot
-$action = 'RESET';
-$path = '/YOUR/PATH';
-$file = 'middleware.py';
-chdir($path);
-// middleware is called with ./middleware.py ACTION:STRING IS_FINISHED:BOOL
-shell_exec('./'.$file.' '.$action.' false');
-?>
-```
-
-This content was still copied to your public webserver root folder (/var/www/html)
-
-
-### 3. Hurray! Robot should reset
-
-
-## Simulation without robot
-Set the environment variable export TEST_IROBOT to 1: 
-```
-export TEST_IROBOT=1
-```
-
 ## Getting started
 
 You can call the script now by running http://localhost/index.php
@@ -120,6 +48,17 @@ Example: `curl -X POST http://localhost/index.php -d "message: \"incredible impo
 #### Installation
 
 This program helps you to control your iRobot within a web interface or other script you would like to run. 
+
+- Install Python
+```bash
+$ sudo apt-get update
+$ sudo apt-get install python
+$ git clone https://github.com/pyserial/pyserial
+$ cd pyserial
+$ python setup.py install
+$ cd ../
+$ rm -R pyserial
+```
 
 - Make the middleware.py available for other users (required if you call this script from users with minimal rights, e.g. www-data)
 
