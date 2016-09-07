@@ -4,6 +4,15 @@
 
  - Ubuntu 14.04 OS or Ubuntu 16.x OS or Raspberry OS
 
+## Installation
+
+```bash
+$ # clone repo
+$ git clone https://github.com/bt-accountability-mechanism/command-server
+$ cd command-server
+$ sudo ./install.sh
+```
+
 ## Getting started
 
 You can call the script now by running http://localhost/index.php
