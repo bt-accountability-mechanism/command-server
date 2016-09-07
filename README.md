@@ -2,22 +2,29 @@
 
 ## Installation
 
-### Install a web server on your server with PHP support
+### Getting started
 
-#### Option1: apache2
-
-##### Install apache2
 ```
-sudo apt-get update
-sudo apt-get install apache2
+
+
+### Detailed installation
+
+#### Install a web server on your server with PHP support
+
+##### Option1: apache2
+
+###### Install apache2
+```
+$ sudo apt-get update
+$ sudo apt-get install apache2
 ```
 
 ##### Install PHP
 This example shows how to install PHP-5, but you can use any other version >= 5. 
 
 Install PHP: 
-```
-sudo apt-get install php5 libapache2-mod-php5
+```bash
+$ sudo apt-get install php5 libapache2-mod-php5
 ```
 
 Restart Apache2
@@ -27,22 +34,22 @@ sudo service apache2 restart
 
 Ref: https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu
 
-#### Option2: nginx
+##### Option2: nginx
 
-##### Install nginx
+###### Install nginx
 
+```bash
+$ sudo apt-get update
+$ sudo apt-get install nginx
 ```
-sudo apt-get update
-sudo apt-get install nginx
-```
 
-###### Install PHP
+####### Install PHP
 
 First install PHP-FPM
 
+```bash
+$ sudo apt-get install php5-fpm
 ```
-sudo apt-get install php5-fpm
-``
 
 Next, activate it in your nginx server
 `sudo nano /etc/nginx/sites-available/default`
@@ -82,11 +89,11 @@ server {
 ```
 
 Restart nginx
-```
+```bash
 sudo service nginx restart
 ```
 
-### Clone repo in public webserver folder
+#### Clone repo in public webserver folder
 
 If you use apache2, /var/www/html should be normally your public folder: 
 ```
@@ -130,11 +137,12 @@ End moving left:
 http://localhost/robot_web/index.php?action=left&finished=true
 
 For saving logs, please make a POST request with the following parameters: 
-``
+```
 {
     message: string
 }
-``
+```
+
 # iRobot control
 
 This program helps you to control your iRobot within a web interface or other script you would like to run. 
